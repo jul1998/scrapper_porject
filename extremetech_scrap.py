@@ -1,16 +1,5 @@
 import time
 import pandas as pd
-import requests
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-import time
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-
 import time
 import requests
 from bs4 import BeautifulSoup
@@ -66,7 +55,7 @@ class ExtremeTechScrapper:
             print("H1 element not found")
             return None
 
-    def scrape(self, filename="extremetech_data_scrape.csv"):
+    def scrape(self, filename="extremetech_data_scrape"):
         all_links = self.extract_detail_links()
         all_items = []
         for link in all_links:
@@ -83,8 +72,8 @@ class ExtremeTechScrapper:
 
 
 # Example usage
-scrapper = ExtremeTechScrapper("https://extremetechcr.com/tienda/27-monitores?id_category=27&n=10")
+scrapper = ExtremeTechScrapper("https://extremetechcr.com/tienda/27-monitores?id_category=27&n=74")
 links = scrapper.extract_detail_links()
-scrapper.scrape(filename="monitors_data")
+scrapper.scrape(filename="monitores_extremetech")
 
 
