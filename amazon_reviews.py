@@ -47,6 +47,8 @@ class AmazonReviews:
                 # Extract review title and rating
                 title_element = review_element.find("a", {"data-hook": "review-title"})
                 rating_element = review_element.find("i", {"data-hook": "review-star-rating"})
+                if not title_element or not rating_element:
+                    continue
                 review_info["Title"] = title_element.text.strip()
                 review_info["Rating"] = rating_element.find("span", {"class": "a-icon-alt"}).text.strip()
 
@@ -134,13 +136,13 @@ class AmazonReviews:
 
 count = 0
 if __name__ == "__main__":
-    ASIN = 'B09W7X8LSL'
+    ASIN = 'B0B1VQ1ZQY'
     base_url = f"https://www.amazon.com/product-reviews/{ASIN}/ref=cm_cr_arp_d_paging_btm_next_1?pageNumber="
     page_number = 1
     scrapper = AmazonReviews(base_url + str(page_number))
     all_reviews = []
 
-    while page_number <= 2:
+    while page_number <= 3:
         reviews = scrapper.get_reviews_from_page()
         all_reviews.extend(reviews)
 
@@ -151,7 +153,7 @@ if __name__ == "__main__":
         scrapper.url = base_url + str(page_number)
 
     scrapper.close_driver()
-    scrapper.convert_to_csv(all_reviews, filename="amazon_reviews_TABLET_SURFACE_7")
+    scrapper.convert_to_csv(all_reviews, filename=f"amazon_reviews_{ASIN}")
 
     # Print the extracted reviews
     for i, review in enumerate(all_reviews, 1):
